@@ -15,8 +15,11 @@ app.get('/api/scrape', async (req, res) => {
         console.log('Palavra-chave:', keyword)
 
         const url = `https://www.amazon.com/s?k=${keyword}`
-
-        const response = await axios.get(url)
+        const response = await axios.get(url, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1'
+            }
+        })
         const html = response.data
 
         const dom = new JSDOM(html)
@@ -24,13 +27,30 @@ app.get('/api/scrape', async (req, res) => {
 
         const products = []
 
-        document.querySelectorAll('.s-result-item').forEach((item) => {
-            const title = item.querySelector('h2').textContent.trim()
-            const rating = parseFloat(item.querySelector('.a-icon-star-small').textContent.split(' ')[0])
-            const reviews = parseInt(item.querySelector('.a-size-small').textContent.replace(/[^\d]/g, ''))
-            const imageUrl = item.querySelector('img').getAttribute('src')
+        // document.querySelectorAll('.s-result-item').forEach((item) => {
+        //     const title = item.querySelector('h2').textContent.trim()
+        //     const rating = parseFloat(item.querySelector('.a-icon-star-small').textContent.split(' ')[0])
+        //     const reviews = parseInt(item.querySelector('.a-size-small').textContent.replace(/[^\d]/g, ''))
+        //     const imageUrl = item.querySelector('img').getAttribute('src')
 
-            products.push({ title, rating, reviews, imageUrl })
+        //     products.push({ title, rating, reviews, imageUrl })
+        // })
+
+        document.querySelectorAll('.s-result-item').forEach((item) => {
+            const titleElement = item.querySelector('h2');
+            if (!titleElement) return; // Verifica se o seletor retornou null
+            const title = titleElement.textContent.trim();
+            const ratingElement = item.querySelector('.a-icon-star-small');
+            if (!ratingElement) return; // Verifica se o seletor retornou null
+            const rating = parseFloat(ratingElement.textContent.split(' ')[0]);
+            const reviewsElement = item.querySelector('.a-size-small');
+            if (!reviewsElement) return; // Verifica se o seletor retornou null
+            const reviews = parseInt(reviewsElement.textContent.replace(/[^\d]/g, ''));
+            const imageUrlElement = item.querySelector('img');
+            if (!imageUrlElement) return; // Verifica se o seletor retornou null
+            const imageUrl = imageUrlElement.getAttribute('src');
+        
+            products.push({ title, rating, reviews, imageUrl });
         })
 
         res.json(products)
