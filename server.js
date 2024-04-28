@@ -14,7 +14,7 @@ app.use(cors())
 const PORT = process.env.PORT || 3000
 
 // Defines the first route, sending to home page
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
     res.redirect('https://amazon-api-frontend.onrender.com')
 })
 
@@ -83,7 +83,7 @@ app.get('/api/scrape', async (req, res) => {
             if (!imageUrlElement) return
 
             // Get the product image URL
-            const imageUrl = imageUrlElement.getAttribute('src')
+            const imageUrl = imageUrlElement.getAttribute('src') 
 
             // Add the product information to the products array
             products.push({ title, rating, reviews, imageUrl })
@@ -91,8 +91,8 @@ app.get('/api/scrape', async (req, res) => {
 
         // Return the extracted data in JSON format in the response
         res.json(products)
-
-    } catch (error) { // Handlinig the errors
+        // Handlinig the errors
+    } catch (error) {
         console.error('Error:', error)
         res.status(500).json({ error: 'Internal Server Error', message: error.message })
     }
