@@ -27,37 +27,28 @@ app.get('/api/scrape', async (req, res) => {
 
         const products = []
 
-        // document.querySelectorAll('.s-result-item').forEach((item) => {
-        //     const title = item.querySelector('h2').textContent.trim()
-        //     const rating = parseFloat(item.querySelector('.a-icon-star-small').textContent.split(' ')[0])
-        //     const reviews = parseInt(item.querySelector('.a-size-small').textContent.replace(/[^\d]/g, ''))
-        //     const imageUrl = item.querySelector('img').getAttribute('src')
-
-        //     products.push({ title, rating, reviews, imageUrl })
-        // })
-
         document.querySelectorAll('.s-result-item').forEach((item) => {
-            const titleElement = item.querySelector('h2');
-            if (!titleElement) return; // Verifica se o seletor retornou null
-            const title = titleElement.textContent.trim();
-            const ratingElement = item.querySelector('.a-icon-star-small');
-            if (!ratingElement) return; // Verifica se o seletor retornou null
-            const rating = parseFloat(ratingElement.textContent.split(' ')[0]);
-            const reviewsElement = item.querySelector('.a-size-small');
-            if (!reviewsElement) return; // Verifica se o seletor retornou null
-            const reviews = parseInt(reviewsElement.textContent.replace(/[^\d]/g, ''));
-            const imageUrlElement = item.querySelector('img');
-            if (!imageUrlElement) return; // Verifica se o seletor retornou null
-            const imageUrl = imageUrlElement.getAttribute('src');
-        
-            products.push({ title, rating, reviews, imageUrl });
+            const titleElement = item.querySelector('h2')
+            if (!titleElement) return
+            const title = titleElement.textContent.trim()
+            const ratingElement = item.querySelector('.a-icon-star-small')
+            if (!ratingElement) return
+            const rating = parseFloat(ratingElement.textContent.split(' ')[0])
+            const reviewsElement = item.querySelector('.a-size-small')
+            if (!reviewsElement) return
+            const reviews = parseInt(reviewsElement.textContent.replace(/[^\d]/g, ''))
+            const imageUrlElement = item.querySelector('img')
+            if (!imageUrlElement) return
+            const imageUrl = imageUrlElement.getAttribute('src')
+
+            products.push({ title, rating, reviews, imageUrl })
         })
 
         res.json(products)
 
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+        console.error('Error:', error)
+        res.status(500).json({ error: 'Internal Server Error', message: error.message })
     }
 })
 
