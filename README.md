@@ -41,20 +41,11 @@ Gustavo Faustino
 9. CORS
 10. Render
 
-## Pictures
-### desktop
-![desktop-design](./frontend/images/design/desktop-clean.jpg)
-![desktop-design](./frontend/images/design/desktop-filled.jpg)
-### mobile
-![mobile-design](./frontend/images/design/mobile-clean.jpeg)
-![mobile-design](./frontend/images/design/mobile-filled.jpeg)
-
 # Contact
 1. e-mail: gustavofaustino361@gmail.com
 2. LinkedIn: https://www.linkedin.com/in/gustavo-faustino-2659331ba/
 
 ## License
-
 MIT License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
